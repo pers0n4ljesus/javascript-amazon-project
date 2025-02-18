@@ -55,6 +55,9 @@ products.forEach((product) => {
 document.querySelector(('.js-product-grid'))
   .innerHTML = productsHTML;
 
+let intervalId;
+
+
 document.querySelectorAll('.js-add-to-cart-button')
   .forEach((button) => {
     button.addEventListener('click', () => {
@@ -86,7 +89,9 @@ document.querySelectorAll('.js-add-to-cart-button')
       const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
 
       messageElement.classList.add('opacity-full');
-      setTimeout(() => {
+
+      if (intervalId) clearTimeout(intervalId);
+      intervalId = setTimeout(() => {
         messageElement.classList.remove('opacity-full')
       }, 1000);
 
