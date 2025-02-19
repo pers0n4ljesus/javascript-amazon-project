@@ -31,10 +31,22 @@ cart.forEach((cartItem) => {
                 </div>
                 <div class="product-quantity">
                   <span>
-                    Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                    Quantity: <span class="quantity-label 
+                    js-quantity-label-${cartItem.productId}">
+                      ${cartItem.quantity}
+                    </span>
                   </span>
-                  <span class="update-quantity-link link-primary">
+                  <span class="update-quantity-link link-primary
+                  js-update-quantity-link"
+                  data-update-link = "${cartItem.productId}">
                     Update
+                  </span>
+                  <span class="js-update-quantity-container-${cartItem.productId} update-quantity-container">
+                    <input class="quantity-input js-quantity-input-${cartItem.productId}">
+                    <span class="save-quantity-link js-save-quantity-link link-primary"
+                    data-save-link = "${cartItem.productId}">
+                      Save
+                    </span>
                   </span>
                   <span class="delete-quantity-link link-primary js-delete-quantity-link"
                   data-delete-link = "${cartItem.productId}" >
@@ -107,6 +119,80 @@ document.querySelectorAll('.js-delete-quantity-link')
 
     });
   });
+
+
+// My approcah to excercise 14g
+/*
+document.querySelectorAll('.js-update-quantity-link')
+  .forEach((updateLink) => {
+    updateLink.addEventListener('click', () => {
+      const productId = updateLink.dataset.updateLink;
+      document.querySelector(`.js-update-quantity-container-${productId}`).
+        innerHTML = `
+          <input class="quantity-input">
+          <span class="save-quantity-link link-primary">Save</span>
+        `
+    })
+  })
+*/
+
+
+// To display input field when update is clicked
+document.querySelectorAll('.js-update-quantity-link')
+  .forEach((updateLink) => {
+    updateLink.addEventListener('click', () => {
+      const productId = updateLink.dataset.updateLink;
+      const displayElement = document.querySelector(`.js-update-quantity-container-${productId}`);
+      if (displayElement.classList.contains('renderElement')) {
+        displayElement.classList.remove('renderElement');
+      } else displayElement.classList.add('renderElement');
+    })
+  })
+
+
+// To remove input field and save button after it is clicked
+document.querySelectorAll('.js-save-quantity-link')
+  .forEach((saveLink) => {
+    const productId = saveLink.dataset.saveLink;
+
+    saveLink.addEventListener('click', () => {
+      const inputElement = document.querySelector(`.js-quantity-input-${productId}`);
+      const newProductQuantity = Number(inputElement.value);
+      updateQuantityInCart(newProductQuantity, productId);
+    })
+    
+    document.addEventListener('keydown', (event) => {
+      const inputElement = document.querySelector(`.js-quantity-input-${productId}`);
+      if (event.key === 'Enter') {
+        const newProductQuantity = Number(inputElement.value);
+        updateQuantityInCart(newProductQuantity, productId);
+      }
+
+    })
+  })
+
+function updateQuantityInCart(newProductQuantity, productId) {
+  document.querySelector(`.js-update-quantity-container-${productId}`)
+  .classList.remove('renderElement');
+  cart.forEach((cartItem) => {
+    if (cartItem.productId === productId) {
+      if (newProductQuantity > 0 && newProductQuantity <= 10) {
+        cartItem.quantity = newProductQuantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartQuantity('.js-checkout-quantity', 'items');
+        document.querySelector(`.js-quantity-label-${productId}`)
+        .innerHTML = newProductQuantity;
+      }
+    }
+  })
+}
+
+
+
+
+
+
+
 
 
 
