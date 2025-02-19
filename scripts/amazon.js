@@ -1,6 +1,7 @@
 import {addToCart, cart, updateCartQuantity} from "../scripts/cart.js";
 import {products} from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
+
 let productsHTML = '';
 
 updateCartQuantity('.js-cart-quantity');
