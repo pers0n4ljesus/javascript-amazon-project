@@ -3,7 +3,6 @@ import {products} from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 
 let productsHTML = '';
-
 updateCartQuantity('.js-cart-quantity');
 
 products.forEach((product) => {

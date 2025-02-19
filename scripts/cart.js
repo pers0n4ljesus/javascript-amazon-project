@@ -1,3 +1,5 @@
+import { getMatchingProduct } from "../data/products.js";
+
 export let cart = JSON.parse(localStorage.getItem('cart')) || [{
   productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
   quantity: 2,
@@ -5,7 +7,7 @@ export let cart = JSON.parse(localStorage.getItem('cart')) || [{
 },
 {
   productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-  quantity:1,
+  quantity: 1,
   deliveryId: '2'
 }
 ];
@@ -51,7 +53,6 @@ export function getProductQuantity(productId) {
 
 
 export function updateCartQuantity(jsClass, tailing) {
-  console.log(jsClass);
   let cartQuantity = 0;
   cart.forEach((item) => {
     cartQuantity+=item.quantity;
@@ -64,6 +65,26 @@ export function updateCartQuantity(jsClass, tailing) {
 
   document.querySelector(jsClass)
   .innerHTML = text;
+}
+
+export function getTotalCartQuantity() {
+  let cartQuantity = 0;
+  cart.forEach((item) => {
+    cartQuantity+=item.quantity;
+  });
+  return cartQuantity;
+}
+
+export function getOrderValue() {
+  console.log(cart);
+  let orderValue = 0;
+  
+  cart.forEach((cartItem) => {
+    const matchingProduct = getMatchingProduct(cartItem);
+    console.log(matchingProduct);
+    orderValue += (cartItem.quantity * matchingProduct.priceCents)
+  })
+  return orderValue;
 }
 
 /*
