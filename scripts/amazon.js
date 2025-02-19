@@ -3,6 +3,8 @@ import {products} from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 let productsHTML = '';
 
+updateCartQuantity();
+
 products.forEach((product) => {
   productsHTML += `
     <div class="product-container">
@@ -74,8 +76,6 @@ document.querySelectorAll('.js-add-to-cart-button')
   });
 
 function updateCart(productId) {
-  let cartQuantity = 0;
-
   const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
 
   messageElement.classList.add('opacity-full');
@@ -85,6 +85,11 @@ function updateCart(productId) {
     messageElement.classList.remove('opacity-full')
   }, 1000);
 
+  updateCartQuantity();
+}
+
+function updateCartQuantity() {
+  let cartQuantity = 0;
   cart.forEach((item) => {
     cartQuantity+=item.quantity;
   });
