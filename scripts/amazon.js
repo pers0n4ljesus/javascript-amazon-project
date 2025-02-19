@@ -60,7 +60,6 @@ products.forEach((product) => {
 document.querySelector(('.js-product-grid'))
   .innerHTML = productsHTML;
 
-let intervalId;
 
 //Code for adding an item to cart
 document.querySelectorAll('.js-add-to-cart-button')
@@ -79,7 +78,7 @@ function updateCart(productId) {
   const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
 
   messageElement.classList.add('opacity-full');
-
+  let intervalId;
   if (intervalId) clearTimeout(intervalId);
   intervalId = setTimeout(() => {
     messageElement.classList.remove('opacity-full')
