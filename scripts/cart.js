@@ -47,6 +47,23 @@ export function getProductQuantity(productId) {
   return productQuantity;
 }
 
+
+export function updateCartQuantity(jsClass, tailing) {
+  console.log(jsClass);
+  let cartQuantity = 0;
+  cart.forEach((item) => {
+    cartQuantity+=item.quantity;
+  });
+
+  let text;
+  if (tailing) {
+    text = `${cartQuantity} ${tailing}`
+  } else text = `${cartQuantity}`;
+
+  document.querySelector(jsClass)
+  .innerHTML = text;
+}
+
 /*
 Code for generating  dynamic loading of value in quantity selector
 <div class="product-quantity-container">

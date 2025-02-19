@@ -1,9 +1,9 @@
-import {addToCart, cart} from "../scripts/cart.js";
+import {addToCart, cart, updateCartQuantity} from "../scripts/cart.js";
 import {products} from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 let productsHTML = '';
 
-updateCartQuantity();
+updateCartQuantity('.js-cart-quantity');
 
 products.forEach((product) => {
   productsHTML += `
@@ -84,19 +84,11 @@ function updateCart(productId) {
     messageElement.classList.remove('opacity-full')
   }, 1000);
 
-  updateCartQuantity();
+  updateCartQuantity('.js-cart-quantity');
 }
 
-function updateCartQuantity() {
-  let cartQuantity = 0;
-  cart.forEach((item) => {
-    cartQuantity+=item.quantity;
-  });
+updateCartQuantity('.js-cart-quantity');
 
-  
-  document.querySelector('.js-cart-quantity')
-  .innerHTML = `${cartQuantity}`;
-}
 
 
 
