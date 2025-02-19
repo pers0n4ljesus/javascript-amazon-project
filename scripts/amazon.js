@@ -1,4 +1,4 @@
-import {cart} from "../scripts/cart.js";
+import {addToCart, cart} from "../scripts/cart.js";
 import {products} from "../data/products.js";
 let productsHTML = '';
 
@@ -59,55 +59,39 @@ document.querySelector(('.js-product-grid'))
 
 let intervalId;
 
-
+//Code for adding an item to cart
 document.querySelectorAll('.js-add-to-cart-button')
   .forEach((button) => {
     button.addEventListener('click', () => {
 
       const {productId} = button.dataset;
-      let isAlreadyInCart;
-      let cartQuantity = 0;
 
-      const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
-
-
-      cart.forEach((item) => {
-        if ( item.productId === productId ) {
-          isAlreadyInCart = item;
-        }
-      });
-
-      if (isAlreadyInCart) {
-        isAlreadyInCart.quantity+= quantity;
-      } else {
-        cart.push(
-          {
-            productId,
-            quantity: quantity
-          }
-        );
-      }
-
-      const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
-
-      messageElement.classList.add('opacity-full');
-
-      if (intervalId) clearTimeout(intervalId);
-      intervalId = setTimeout(() => {
-        messageElement.classList.remove('opacity-full')
-      }, 1000);
-
-      cart.forEach((item) => {
-        cartQuantity+=item.quantity;
-      });
-
+      addToCart(productId);
+      updateCart(productId);
       
-      document.querySelector('.js-cart-quantity')
-      .innerHTML = `${cartQuantity}`;
-      
-      console.log(cart);
     });
   });
+
+function updateCart(productId) {
+  let cartQuantity = 0;
+
+  const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
+
+  messageElement.classList.add('opacity-full');
+
+  if (intervalId) clearTimeout(intervalId);
+  intervalId = setTimeout(() => {
+    messageElement.classList.remove('opacity-full')
+  }, 1000);
+
+  cart.forEach((item) => {
+    cartQuantity+=item.quantity;
+  });
+
+  
+  document.querySelector('.js-cart-quantity')
+  .innerHTML = `${cartQuantity}`;
+}
 
 
 
