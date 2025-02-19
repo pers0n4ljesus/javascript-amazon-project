@@ -1,5 +1,7 @@
-import { cart, getOrderValue, getTotalCartQuantity, updateCartQuantity } from "../../scripts/cart.js";
+import { cart } from "../../scripts/cart.js";
+import { getMatchingProduct } from "../../data/products.js";
 import { formatMoney } from "../utils/money.js";
+import { getDeliveryCharge } from "../../data/deliveryOptions.js";
 
 export function renderOrderSummary() {
   let html = 
@@ -10,27 +12,27 @@ export function renderOrderSummary() {
 
           <div class="payment-summary-row">
             <div>Items (${getTotalCartQuantity()}):</div>
-            <div class="payment-summary-money">${getOrderValue()}</div>
+            <div class="payment-summary-money">$${formatMoney(getOrderValueCents())}</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Shipping &amp; handling:</div>
-            <div class="payment-summary-money">$4.99</div>
+            <div class="payment-summary-money">$${formatMoney(getShippingChargeCents())}</div>
           </div>
 
           <div class="payment-summary-row subtotal-row">
             <div>Total before tax:</div>
-            <div class="payment-summary-money">$47.74</div>
+            <div class="payment-summary-money">$${formatMoney(totalBeforeTaxCents())}</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Estimated tax (10%):</div>
-            <div class="payment-summary-money">$4.77</div>
+            <div class="payment-summary-money">$${formatMoney(totalBeforeTaxCents()*0.1)}</div>
           </div>
 
           <div class="payment-summary-row total-row">
             <div>Order total:</div>
-            <div class="payment-summary-money">$52.51</div>
+            <div class="payment-summary-money">$${formatMoney(totalBeforeTaxCents()+(totalBeforeTaxCents()*0.1))}</div>
           </div>
 
           <button class="place-order-button button-primary">
@@ -41,6 +43,34 @@ export function renderOrderSummary() {
 
   document.querySelector('.js-payment-summary')
     .innerHTML = html;
-    console.log('What');
 }
 
+
+function getTotalCartQuantity() {
+  let cartQuantity = 0;
+  cart.forEach((item) => {
+    cartQuantity+=item.quantity;
+  });
+  return cartQuantity;
+}
+
+function getOrderValueCents() {
+  let orderValue = 0;
+  cart.forEach((cartItem) => {
+    const matchingProduct = getMatchingProduct(cartItem);
+    orderValue += (cartItem.quantity * matchingProduct.priceCents)
+  })
+  return orderValue;
+}
+
+function getShippingChargeCents() {
+  let shippingCharge = 0;
+  cart.forEach((cartItem) => {
+    shippingCharge += getDeliveryCharge(cartItem.deliveryId);
+  })
+  return shippingCharge;
+}
+
+function totalBeforeTaxCents() {
+  return getShippingChargeCents() + getOrderValueCents();
+}

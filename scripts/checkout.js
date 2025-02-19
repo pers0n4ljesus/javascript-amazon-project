@@ -146,6 +146,7 @@ document.querySelectorAll('.js-delivery-option-input')
         storeCartItem = cartItem;
         cartItem.deliveryId = radioElement.dataset.deliveryId;
         renderOrderReview();
+        renderOrderSummary();
       }
     })
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -168,6 +169,7 @@ function updateQuantityInCart(newProductQuantity, productId) {
         updateCartQuantity('.js-checkout-quantity', 'items');
         document.querySelector(`.js-quantity-label-${productId}`)
         .innerHTML = newProductQuantity;
+        renderOrderSummary();
       }
     }
   })

@@ -1,4 +1,5 @@
 import { getMatchingProduct } from "../data/products.js";
+import { renderOrderSummary } from "./checkout/orderSummary.js";
 
 export let cart = JSON.parse(localStorage.getItem('cart')) || [{
   productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -27,7 +28,8 @@ export function addToCart (productId) {
     cart.push(
       {
         productId,
-        quantity: quantity
+        quantity: quantity,
+        deliveryId: '1'
       }
     );
   }
@@ -38,6 +40,7 @@ export function addToCart (productId) {
 export function removeFromCart(productId) {
   cart = cart.filter(cartItem => cartItem.productId !== productId);
   localStorage.setItem('cart', JSON.stringify(cart));
+  renderOrderSummary();
 }
 
 export function getProductQuantity(productId) {
@@ -65,26 +68,6 @@ export function updateCartQuantity(jsClass, tailing) {
 
   document.querySelector(jsClass)
   .innerHTML = text;
-}
-
-export function getTotalCartQuantity() {
-  let cartQuantity = 0;
-  cart.forEach((item) => {
-    cartQuantity+=item.quantity;
-  });
-  return cartQuantity;
-}
-
-export function getOrderValue() {
-  console.log(cart);
-  let orderValue = 0;
-  
-  cart.forEach((cartItem) => {
-    const matchingProduct = getMatchingProduct(cartItem);
-    console.log(matchingProduct);
-    orderValue += (cartItem.quantity * matchingProduct.priceCents)
-  })
-  return orderValue;
 }
 
 /*
