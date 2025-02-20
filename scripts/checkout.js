@@ -3,11 +3,11 @@ import { getMatchingProduct, products } from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { renderOrderSummary } from "./checkout/orderSummary.js";
+import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 
 updateCartQuantity('.js-checkout-quantity', 'items');
 renderOrderReview();
-renderOrderSummary();
+renderPaymentSummary();
 
 function renderOrderReview() {
   let cartHTML = '';
@@ -146,7 +146,7 @@ document.querySelectorAll('.js-delivery-option-input')
         storeCartItem = cartItem;
         cartItem.deliveryId = radioElement.dataset.deliveryId;
         renderOrderReview();
-        renderOrderSummary();
+        renderPaymentSummary();
       }
     })
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -169,7 +169,7 @@ function updateQuantityInCart(newProductQuantity, productId) {
         updateCartQuantity('.js-checkout-quantity', 'items');
         document.querySelector(`.js-quantity-label-${productId}`)
         .innerHTML = newProductQuantity;
-        renderOrderSummary();
+        renderPaymentSummary();
       }
     }
   })

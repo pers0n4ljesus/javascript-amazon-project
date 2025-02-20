@@ -1,9 +1,9 @@
-import { cart } from "../../scripts/cart.js";
+import { cart } from "../cart.js";
 import { getMatchingProduct } from "../../data/products.js";
 import { formatMoney } from "../utils/money.js";
 import { getDeliveryCharge } from "../../data/deliveryOptions.js";
 
-export function renderOrderSummary() {
+export function renderPaymentSummary() {
   let html = 
     `
       <div class="payment-summary-title">

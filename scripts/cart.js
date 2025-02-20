@@ -1,4 +1,4 @@
-import { renderOrderSummary } from "./checkout/orderSummary.js";
+import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 
 export let cart;
 
@@ -49,7 +49,7 @@ function saveToStorage() {
 export function removeFromCart(productId) {
   cart = cart.filter(cartItem => cartItem.productId !== productId);
   saveToStorage();
-  renderOrderSummary();
+  renderPaymentSummary();
 }
 
 export function getProductQuantity(productId) {
