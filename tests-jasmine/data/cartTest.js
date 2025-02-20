@@ -30,6 +30,7 @@ describe('Test Suite: Add to Cart', () => {
     addToCart(productId1);
     expect(cart.length).toEqual(2);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify(cart));
     expect(cart[1].productId).toEqual(productId2);
     expect(cart[0].quantity).toEqual(3);
 
@@ -39,6 +40,7 @@ describe('Test Suite: Add to Cart', () => {
     addToCart(productId1);
     expect(cart.length).toEqual(1);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify(cart));
     expect(cart[0].productId).toEqual(productId1);
     expect(cart[0].quantity).toEqual(1);
   });
