@@ -178,7 +178,13 @@ function updateQuantityInCart(newProductQuantity, productId) {
 
 // To calculate Delivery date
 function calculateDeliveryDate(deliveryWindow) {
-  return dayjs().add(deliveryWindow, 'days').format('dddd, MMMM D')
+  let deliveryDate = dayjs().add(deliveryWindow, 'days').format('dddd');
+  if (deliveryDate === 'Saturday') {
+    deliveryDate = dayjs().add(2, 'days').format('dddd, MMMM D');
+  } else if (deliveryDate === 'Sunday') {
+    deliveryDate = dayjs().add(1, 'days').format('dddd, MMMM D');
+  } else deliveryDate = dayjs().add(deliveryWindow, 'days').format('dddd, MMMM D');
+  return deliveryDate;
 }
 
 function getDeliveryWindow(cartItem) {
