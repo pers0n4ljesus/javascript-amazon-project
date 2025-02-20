@@ -6,10 +6,10 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 
 updateCartQuantity('.js-checkout-quantity', 'items');
-renderOrderReview();
+renderOderSummary();
 renderPaymentSummary();
 
-function renderOrderReview() {
+function renderOderSummary() {
   let cartHTML = '';
   cart.forEach((cartItem) => {
     let matchingProduct = getMatchingProduct(cartItem);
@@ -145,7 +145,7 @@ document.querySelectorAll('.js-delivery-option-input')
       if (cartItem.productId === radioElement.dataset.productId) {
         storeCartItem = cartItem;
         cartItem.deliveryId = radioElement.dataset.deliveryId;
-        renderOrderReview();
+        renderOderSummary();
         renderPaymentSummary();
       }
     })
