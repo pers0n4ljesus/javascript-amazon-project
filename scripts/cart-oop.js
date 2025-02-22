@@ -92,25 +92,3 @@ cart.loadFromStorage();
 businessCart.loadFromStorage();
 console.log(cart);
 console.log(businessCart);
-
-
-
-
-
-
-
-
-
-
-
-/*
-Code for generating  dynamic loading of value in quantity selector
-<div class="product-quantity-container">
-  <select class="js-quantity-selector-${product.id}">
-    ${[...Array(10)].map((_, i) => {
-      const value = i + 1;
-      return `<option value="${value}" ${getProductQuantity(product.id) === value ? 'selected' : ''}>${value}</option>`;
-    }).join('')}
-  </select>
-</div>
-*/
