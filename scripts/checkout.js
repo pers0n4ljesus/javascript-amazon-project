@@ -2,6 +2,8 @@ import { cart, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 
+// import '../data/backend-practice.js';
+
 updateCartQuantity('.js-checkout-quantity', 'items');
 renderOrderSummary();
 renderPaymentSummary();

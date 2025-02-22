@@ -13,6 +13,7 @@ export function getMatchingProduct (cartItem) {
 
 class Product {
   id;
+  name;
   image;
   rating;
   priceCents;
@@ -20,6 +21,7 @@ class Product {
 
   constructor (productDetails) {
     this.id = productDetails.id;
+    this.name = productDetails.name;
     this.image = productDetails.image;
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
@@ -51,10 +53,35 @@ class Clothing extends Product {
 
   extraInfoHTML() {
     return `
-      <a href="${this.sizeChartLink}" target="_blank">Size chart</a>
+      <a href="${this.sizeChartLink}" 
+        class = "link-primary"
+        target="_blank">Size chart</a>
     `;
   };
 
+}
+
+class Appliance extends Product {
+  type
+  instructionsLink;
+  warrantyLink;
+
+  constructor (productDetails) {
+    super(productDetails);
+    productDetails.instructionsLink ? this.instructionsLink = productDetails.instructionsLink : "images/appliance-instructions.png";
+    productDetails.warrantyLink ? this.warrantyLink = productDetails.warrantyLink : "images/appliance-warranty.png";
+  }
+
+  extraInfoHTML() {
+    return `
+      <a href="${this.instructionsLink}"
+      class = "link-primary"
+      target="_blank">Instructions</a>
+      <a href="${this.warrantyLink}"
+        class = "link-primary"
+        target="_blank">Warranty</a>
+    `;
+  };
 }
 
 
@@ -119,7 +146,8 @@ export const products = [
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "appliance",
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -741,9 +769,9 @@ export const products = [
 ].map((productDetails) => {
   if (productDetails.type === "clothing") {
     return new Clothing(productDetails);
+  } else if (productDetails.type === "appliance") {
+    return new Appliance(productDetails);
   } else {
     return new Product(productDetails);
   }
 });
-
-console.log(products);
