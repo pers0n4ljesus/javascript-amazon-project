@@ -79,6 +79,17 @@ export function updateCartQuantity(jsClass, tailing) {
   .innerHTML = text;
 }
 
+export function loadCart(fun) {
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', () => {
+    fun();
+  });
+  
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
+}
+
+
 /*
 Code for generating  dynamic loading of value in quantity selector
 <div class="product-quantity-container">

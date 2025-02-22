@@ -1,16 +1,25 @@
-import { cart, loadFromStorage, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
+import { cart, loadCart, loadFromStorage, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
-import { loadProducts } from "../data/products.js";
+import { loadProducts, loadProductsFetch } from "../data/products.js";
 
 // import '../data/backend-practice.js';
 
-loadProducts(() => {
+Promise.all([
+  loadProductsFetch(),
+  new Promise((resolve) => {
+    loadCart(() => {
+      resolve('Cart loaded!');
+    })
+  })
+]).then((values) => {
+  console.log(values);
   updateCartQuantity('.js-checkout-quantity', 'items');
   renderOrderSummary();
   renderPaymentSummary();
   delegateEventListeners();
 });
+
 
 
 export function delegateEventListeners () {
