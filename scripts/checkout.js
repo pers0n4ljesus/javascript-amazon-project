@@ -1,13 +1,18 @@
-import { cart, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
+import { cart, loadFromStorage, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
+import { loadProducts } from "../data/products.js";
 
 // import '../data/backend-practice.js';
 
-updateCartQuantity('.js-checkout-quantity', 'items');
-renderOrderSummary();
-renderPaymentSummary();
-delegateEventListeners();
+loadProducts(() => {
+  updateCartQuantity('.js-checkout-quantity', 'items');
+  renderOrderSummary();
+  renderPaymentSummary();
+  delegateEventListeners();
+});
+
+
 
 
 export function delegateEventListeners () {

@@ -1,9 +1,13 @@
 import {addToCart, cart, updateCartQuantity} from "../scripts/cart.js";
-import {products} from "../data/products.js";
+import {products, loadProducts} from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 import '../data/products.js'
 
-let productsHTML = '';
+
+loadProducts(renderProductsGrid);
+
+function renderProductsGrid() {
+  let productsHTML = '';
 updateCartQuantity('.js-cart-quantity');
 
 products.forEach((product) => {
@@ -49,7 +53,8 @@ products.forEach((product) => {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart js-added-to-cart${product.id}">
+      <div class="added-to-cart js-added-to-cart${product.id}"
+      data-product-id="${product.id}">
         <img src="images/icons/checkmark.png">
         Added
       </div>
@@ -63,8 +68,13 @@ products.forEach((product) => {
 document.querySelector(('.js-product-grid'))
   .innerHTML = productsHTML;
 
+updateCartQuantity('.js-cart-quantity');
 
-//Code for adding an item to cart
+}
+
+
+
+// Code for adding an item to cart
 document.querySelectorAll('.js-add-to-cart-button')
   .forEach((button) => {
     button.addEventListener('click', () => {
@@ -77,20 +87,29 @@ document.querySelectorAll('.js-add-to-cart-button')
     });
   });
 
-function updateCart(productId) {
-  const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
+document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target.classList.contains('js-add-to-cart-button')) {
+      const productId = target.dataset.productId;
 
-  messageElement.classList.add('opacity-full');
-  let intervalId;
-  if (intervalId) clearTimeout(intervalId);
-  intervalId = setTimeout(() => {
-    messageElement.classList.remove('opacity-full')
-  }, 1000);
+      addToCart(productId);
+      updateCart(productId);
+    }
+  })
 
-  updateCartQuantity('.js-cart-quantity');
-}
+  function updateCart(productId) {
+    const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
+  
+    messageElement.classList.add('opacity-full');
+    let intervalId;
+    if (intervalId) clearTimeout(intervalId);
+    intervalId = setTimeout(() => {
+      messageElement.classList.remove('opacity-full')
+    }, 1000);
+  
+    updateCartQuantity('.js-cart-quantity');
+  }
 
-updateCartQuantity('.js-cart-quantity');
 
 
 
