@@ -1,3 +1,5 @@
+import { formatMoney } from "../scripts/utils/money.js";
+
 export function getMatchingProduct (cartItem) {
   let matchingProduct;
   products.forEach((product) => {
@@ -7,6 +9,32 @@ export function getMatchingProduct (cartItem) {
   })
   return matchingProduct;
 }
+
+
+class Product {
+  id;
+  image;
+  rating;
+  priceCents;
+  keywords;
+
+  constructor (productDetails) {
+    this.id = productDetails.id;
+    this.image = productDetails.image;
+    this.rating = productDetails.rating;
+    this.priceCents = productDetails.priceCents;
+    this.keywords = productDetails.keywords;
+  }
+
+  getStarsUrl() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  };
+
+  getPriceCents() {
+    return `${formatMoney(this.priceCents)}`;
+  };
+}
+
 
 
 export const products = [
@@ -688,4 +716,6 @@ export const products = [
     },
     priceCents:2099
   }
-];
+].map((productDetails) => {
+  return new Product(productDetails);
+});
