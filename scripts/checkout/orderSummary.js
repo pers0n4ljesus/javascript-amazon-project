@@ -1,4 +1,4 @@
-import { getMatchingProduct } from "../../data/products.js";
+import { getMatchingProduct, products } from "../../data/products.js";
 import { cart } from "../cart.js";
 import { formatMoney } from "../utils/money.js";
 import { getDeliveryWindow, calculateDeliveryDate, deliveryOptions } from "../../data/deliveryOptions.js";
@@ -16,7 +16,7 @@ export function renderOrderSummary() {
 
               <div class="cart-item-details-grid">
                 <img class="product-image"
-                  src="${matchingProduct.image}">
+                  src="${matchingProduct.image || '../images/amazon-logo.png'}">
 
                 <div class="cart-item-details">
                   <div class="product-name">

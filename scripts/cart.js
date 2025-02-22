@@ -79,6 +79,12 @@ export function updateCartQuantity(jsClass, tailing) {
   .innerHTML = text;
 }
 
+export function loadCartFetch() {
+  fetch('https://supersimplebackend.dev/cart').then((response) => {
+    return response;
+  })
+}
+
 export function loadCart(fun) {
   const xhr = new XMLHttpRequest();
   xhr.addEventListener('load', () => {

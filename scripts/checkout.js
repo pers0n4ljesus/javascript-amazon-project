@@ -1,25 +1,35 @@
-import { cart, loadCart, loadFromStorage, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
+import { cart, loadCart, loadCartFetch, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
-import { loadProducts, loadProductsFetch } from "../data/products.js";
+import { loadProductsFetch } from "../data/products.js";
 
 // import '../data/backend-practice.js';
+renderPage();
 
+async function renderPage () {
+  await Promise.all([
+    loadProductsFetch(),
+    loadCart()
+  ]);
+  
+  updateCartQuantity('.js-checkout-quantity', 'items');
+  renderOrderSummary();
+  renderPaymentSummary();
+  delegateEventListeners();
+
+}
+
+/*
 Promise.all([
   loadProductsFetch(),
-  new Promise((resolve) => {
-    loadCart(() => {
-      resolve('Cart loaded!');
-    })
-  })
-]).then((values) => {
-  console.log(values);
+  loadCartFetch()
+]).then(() => {
   updateCartQuantity('.js-checkout-quantity', 'items');
   renderOrderSummary();
   renderPaymentSummary();
   delegateEventListeners();
 });
-
+*/
 
 
 export function delegateEventListeners () {
