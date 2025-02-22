@@ -13,8 +13,6 @@ loadProducts(() => {
 });
 
 
-
-
 export function delegateEventListeners () {
 document.body.addEventListener("click", (event) => {
   const target = event.target;
