@@ -17,7 +17,7 @@ describe('Test suite: formatMoney ( converrts cents into dollars)', () => {
     expect(formatMoney(2000.4)).toEqual('20.00');
   });
 
-  it('works forr negative numbers', () => {
+  it('works for negative numbers', () => {
     expect(formatMoney(-1500)).toEqual('-15.00');
   })
 });

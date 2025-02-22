@@ -1,12 +1,6 @@
-import { cart, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
-import { renderPaymentSummary } from "./checkout/paymentSummary.js";
-import { renderOrderSummary } from "./checkout/orderSummary.js";
-import '../scripts/cart-oop.js';
-
-updateCartQuantity('.js-checkout-quantity', 'items');
-renderOrderSummary();
-renderPaymentSummary();
-delegateEventListeners();
+import { removeFromCart,updateCartQuantity } from "../../../scripts/cart.js";
+import { renderOrderSummary } from "../../../scripts/checkout/orderSummary.js";
+import { renderPaymentSummary } from "../../../scripts/checkout/paymentSummary.js";
 
 
 export function delegateEventListeners () {
@@ -69,33 +63,3 @@ document.body.addEventListener("change", (event) => {
   }
 });
 }
-
-
-// To update product quantity in cart as per input
-function updateQuantityInCart(newProductQuantity, productId) {
-  const updateContainer = document.querySelector(`.js-update-quantity-container-${productId}`);
-
-  // Ensure vaild quantity input
-  if (isNaN(newProductQuantity) || newProductQuantity <=0 || newProductQuantity > 10) {
-    return;
-  }
-
-  cart.forEach((cartItem) => {
-    if (cartItem.productId === productId) {
-      cartItem.quantity = newProductQuantity;
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartQuantity('.js-checkout-quantity', 'items');
-      document.querySelector(`.js-quantity-label-${productId}`)
-      .innerHTML = newProductQuantity;
-      renderPaymentSummary();
-    }
-  })
-}
-
-
-
-
-
-
-
-
