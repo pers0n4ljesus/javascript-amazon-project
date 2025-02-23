@@ -1,4 +1,4 @@
-import {addToCart, cart, loadFromStorage} from '../../scripts/cart.js'
+import {addToCart, cart, loadFromStorage} from '../../data/cart.js'
 
 describe('Test Suite: Add to Cart', () => {
   const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';

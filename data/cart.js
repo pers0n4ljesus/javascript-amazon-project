@@ -18,6 +18,7 @@ export function loadFromStorage () {
   ];
 }
 
+
 export function addToCart (productId) {
   let isAlreadyInCart;
   const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
@@ -84,7 +85,16 @@ export function loadCartFetch() {
     return response;
   })
 }
-
+export async function loadCart() {
+  try {
+    await fetch('https://supersimplebackend.dev/cart').then((response) => {
+      console.log(response.text)
+    });
+  } catch (error) {
+  }
+  
+}
+/*
 export function loadCart(fun) {
   const xhr = new XMLHttpRequest();
   xhr.addEventListener('load', () => {
@@ -94,7 +104,7 @@ export function loadCart(fun) {
   xhr.open('GET', 'https://supersimplebackend.dev/cart');
   xhr.send();
 }
-
+*/
 
 /*
 Code for generating  dynamic loading of value in quantity selector

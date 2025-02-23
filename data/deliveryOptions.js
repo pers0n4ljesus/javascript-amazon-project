@@ -48,3 +48,7 @@ export function getDeliveryWindow(cartItem) {
   })
   return deliveryWindow;
 }
+
+export function formatDate(date) {
+  return dayjs(date).format('dddd, MMMM D');
+}

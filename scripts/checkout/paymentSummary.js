@@ -4,6 +4,7 @@ import { formatMoney } from "../utils/money.js";
 import { getDeliveryCharge } from "../../data/deliveryOptions.js";
 import { addOrder } from "../orders.js";
 
+
 export function renderPaymentSummary() {
   let html = 
     `
@@ -45,28 +46,39 @@ export function renderPaymentSummary() {
   document.querySelector('.js-payment-summary')
     .innerHTML = html;
 
-  document.querySelector('.js-place-order-button')
-    .addEventListener('click', async () => {
-      try {
-        const response = await fetch('https://supersimplebackend.dev/orders', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }, 
-          body: JSON.stringify({
-            cart: cart
-          })
-        });
-        const order = await response.json();
-        console.log(order);
-        addOrder(order);
+  const placeOrderButton = document.querySelector('.js-place-order-button');
+  placeOrderButton.replaceWith(placeOrderButton.cloneNode(true));
+    
 
-      } catch (error) {
-        console.log('Unexpected errror! Try again later.');
+  document.querySelector('.js-place-order-button')
+  .addEventListener('click', async () => {
+    try {
+      const response = await fetch('https://supersimplebackend.dev/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify({ cart })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      window.location.href="orders.html";
-    });
+      const order = await response.json();
+      localStorage.setItem('latestOrder', JSON.stringify(order));
+
+
+      console.log('Order Response:', order); // 🔍 Debugging output
+      addOrder(order);
+
+      // Redirect only if everything is successful
+      window.location.href = "orders.html";
+
+    } catch (error) {
+      console.error('Unexpected error! Try again later.', error);
+    }
+  });
 }
 
 
