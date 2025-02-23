@@ -67,6 +67,8 @@ export function renderPaymentSummary() {
 
       const order = await response.json();
       localStorage.setItem('latestOrder', JSON.stringify(order));
+      cart.length = 0;
+      localStorage.removeItem('cart');
 
 
       console.log('Order Response:', order); // 🔍 Debugging output
