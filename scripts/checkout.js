@@ -42,7 +42,6 @@ document.body.addEventListener("click", (event) => {
 
   // Delete product from cart
   if ( target.classList.contains('js-delete-quantity-link')) {
-    console.log('clicked');
     const productId = target.dataset.deleteLink;
     removeFromCart(productId);
     document.querySelector(`.js-cart-item-container-${productId}`).remove();

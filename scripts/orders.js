@@ -1,5 +1,5 @@
 import { formatDate } from "../data/deliveryOptions.js";
-import { cart } from "../data/cart.js";
+import { addToCart, cart } from "../data/cart.js";
 import { getMatchingProduct, loadProductsFetch, products } from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 
@@ -78,7 +78,8 @@ async function renderOrderProducts(orderProducts) {
         <div class="product-quantity">
           Quantity: ${orderProduct.quantity}
         </div>
-        <button class="buy-again-button button-primary">
+        <button class="buy-again-button button-primary js-buy-again-button"
+        data-product-id="${orderProduct.productId}">
           <img class="buy-again-icon" src="images/icons/buy-again.png">
           <span class="buy-again-message">Buy it again</span>
         </button>
@@ -96,4 +97,17 @@ async function renderOrderProducts(orderProducts) {
 
   return html;
 }
+
+document.addEventListener('click', (event) => {
+  const target = event.target;
+
+  if (target.classList.contains('js-buy-again-button')) {
+    const productId = target.dataset.productId;
+    console.log(productId);
+    addToCart(productId);
+    window.location.href = 'checkout.html'; 
+
+  }
+});
+
 

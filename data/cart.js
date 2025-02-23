@@ -11,7 +11,8 @@ export function loadFromStorage () {
 
 export function addToCart (productId) {
   let isAlreadyInCart;
-  const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+  const quantityElement = document.querySelector(`.js-quantity-selector-${productId}`);
+  const quantity = quantityElement ? Number(quantityElement.value) : 1;
   cart.forEach((item) => {
     if ( item.productId === productId ) {
       isAlreadyInCart = item;
