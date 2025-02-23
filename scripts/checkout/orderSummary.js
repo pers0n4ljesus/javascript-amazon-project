@@ -1,5 +1,5 @@
 import { getMatchingProduct, products } from "../../data/products.js";
-import { cart } from "../cart.js";
+import { cart } from "../../data/cart.js";
 import { formatMoney } from "../utils/money.js";
 import { getDeliveryWindow, calculateDeliveryDate, deliveryOptions } from "../../data/deliveryOptions.js";
 

@@ -1,4 +1,4 @@
-import { cart, loadCartFetch, removeFromCart, updateCartQuantity } from "../scripts/cart.js";
+import { cart, loadCartFetch, removeFromCart, updateCartQuantity } from "../data/cart.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { loadProductsFetch } from "../data/products.js";

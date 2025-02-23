@@ -1,4 +1,4 @@
-import { renderPaymentSummary } from "./checkout/paymentSummary.js";
+import { renderPaymentSummary } from "../scripts/checkout/paymentSummary.js";
 
 function Cart(localStorageKey) {
   const cart = {

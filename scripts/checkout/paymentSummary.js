@@ -1,4 +1,4 @@
-import { cart } from "../cart.js";
+import { cart } from "../../data/cart.js";
 import { getMatchingProduct } from "../../data/products.js";
 import { formatMoney } from "../utils/money.js";
 import { getDeliveryCharge } from "../../data/deliveryOptions.js";

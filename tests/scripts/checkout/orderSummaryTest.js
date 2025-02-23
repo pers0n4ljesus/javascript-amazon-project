@@ -1,5 +1,5 @@
 import { loadProducts } from '../../../data/products.js';
-import { cart, removeFromCart, loadFromStorage} from '../../../scripts/cart.js';
+import { cart, loadFromStorage} from '../../../scripts/cart.js';
 import { renderOrderSummary } from '../../../scripts/checkout/orderSummary.js';  
 import { delegateEventListeners } from './delegateEventListeners.js';
 
