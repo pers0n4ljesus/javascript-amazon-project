@@ -3,7 +3,7 @@ import { addToCart, cart } from "../data/cart.js";
 import { getMatchingProduct, loadProductsFetch, products } from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 
-const orders = JSON.parse(localStorage.getItem('orders')) || [];
+export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
 export function addOrder(order) {
   localStorage.removeItem('orders');
@@ -22,7 +22,7 @@ export async function renderOrderList() {
   let html = '';
   
   for (const order of orders) {
-    const productDetails = await renderOrderProducts(order.products);
+    const productDetails = await renderOrderProducts(order.products, order.id);
     
     html += `
         <div class="order-container">
@@ -52,7 +52,7 @@ export async function renderOrderList() {
   document.querySelector(".js-order-grid").innerHTML = html;
 }
 
-async function renderOrderProducts(orderProducts) {
+async function renderOrderProducts(orderProducts, orderId) {
   let html = '';
   
   for (const orderProduct of orderProducts) {
@@ -86,7 +86,7 @@ async function renderOrderProducts(orderProducts) {
       </div>
 
       <div class="product-actions">
-        <a href="tracking.html?orderId=${orderProduct.productId}">
+        <a href="tracking.html?orderId=${orderId}&productId=${orderProduct.productId}">
           <button class="track-package-button button-secondary">
             Track package
           </button>
