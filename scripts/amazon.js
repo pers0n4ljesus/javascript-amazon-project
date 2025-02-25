@@ -1,9 +1,13 @@
 import {addToCart, updateCartQuantity} from "../data/cart.js";
-import {products, loadProducts} from "../data/products.js";
+import {products, loadProducts, loadProductsFetchRefined} from "../data/products.js";
 import '../data/products.js'
 
+const url = new URL(window.location.href);
+const searchKey = url.searchParams.get('search');
 
-loadProducts(renderProductsGrid);
+if(!searchKey) {
+  loadProducts(renderProductsGrid);
+} else loadProductsFetchRefined(renderProductsGrid, searchKey);
 
 function renderProductsGrid() {
   let productsHTML = '';
@@ -73,41 +77,48 @@ function renderProductsGrid() {
 
 
 
-// Code for adding an item to cart
-document.querySelectorAll('.js-add-to-cart-button')
-  .forEach((button) => {
-    button.addEventListener('click', () => {
+// // Code for adding an item to cart
+// document.querySelectorAll('.js-add-to-cart-button')
+//   .forEach((button) => {
+//     button.addEventListener('click', () => {
 
-      const {productId} = button.dataset;
+//       const {productId} = button.dataset;
 
-      addToCart(productId);
-      updateCart(productId);
+//       addToCart(productId);
+//       updateCart(productId);
       
-    });
-  });
+//     });
+//   });
 
 document.addEventListener('click', (event) => {
-    const target = event.target;
-    if (target.classList.contains('js-add-to-cart-button')) {
-      const productId = target.dataset.productId;
+  const target = event.target;
+  if (target.classList.contains('js-add-to-cart-button')) {
+    const productId = target.dataset.productId;
 
-      addToCart(productId);
-      updateCart(productId);
-    }
-  })
-
-  function updateCart(productId) {
-    const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
-  
-    messageElement.classList.add('opacity-full');
-    let intervalId;
-    if (intervalId) clearTimeout(intervalId);
-    intervalId = setTimeout(() => {
-      messageElement.classList.remove('opacity-full')
-    }, 1000);
-  
-    updateCartQuantity('.js-cart-quantity');
+    addToCart(productId);
+    updateCart(productId);
   }
+
+  if (target.classList.contains('js-search-button')) {
+    const searchKey = document.querySelector('.js-search-bar').value
+    console.log(searchKey);
+    window.location.href = `index.html?search=${searchKey}`;
+  }
+})
+
+function updateCart(productId) {
+  const messageElement = document.querySelector(`.js-added-to-cart${productId}`);
+
+  messageElement.classList.add('opacity-full');
+  let intervalId;
+  if (intervalId) clearTimeout(intervalId);
+  intervalId = setTimeout(() => {
+    messageElement.classList.remove('opacity-full')
+  }, 1000);
+
+  updateCartQuantity('.js-cart-quantity');
+}
+
 
 
 

@@ -1,5 +1,5 @@
 import { formatDate } from "../data/deliveryOptions.js";
-import { addToCart, cart } from "../data/cart.js";
+import { addToCart, cart, updateCartQuantity } from "../data/cart.js";
 import { getMatchingProduct, loadProductsFetch, products } from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 
@@ -15,6 +15,7 @@ if (window.location.pathname.includes('orders.html')) {
   document.addEventListener("DOMContentLoaded", async () => {
     await loadProductsFetch();
     renderOrderList();
+    updateCartQuantity('.js-cart-quantity');
   });
 }
 

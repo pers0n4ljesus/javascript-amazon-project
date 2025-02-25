@@ -100,6 +100,29 @@ export async function loadProductsFetch() {
   });
 }
 
+export async function loadProductsFetchRefined(fun, searchKey) {
+  try {
+    const response = await fetch('https://supersimplebackend.dev/products');
+    const productsData = await response.json();
+    const filteredProducts = productsData.filter(product =>
+      product.keywords && product.keywords.includes(searchKey)
+    );
+    console.log(filteredProducts.length);
+    products = filteredProducts.map((productDetails) => {
+      if (productDetails.type === "clothing") {
+        return new Clothing(productDetails);
+      } else if (productDetails.type === "appliance") {
+        return new Appliance(productDetails);
+      } else {
+        return new Product(productDetails);
+      }
+    });
+    fun();
+  } catch (error) {
+    console.log('Unexpected error has occured. Please try again later!', error.message);
+  }
+}
+
 
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
