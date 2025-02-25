@@ -107,6 +107,11 @@ export async function loadProductsFetchRefined(fun, searchKey) {
     const filteredProducts = productsData.filter(product =>
       product.keywords && product.keywords.includes(searchKey)
     );
+    if ( filteredProducts.length === 0) {
+      alert('No matching items found. Showing all products!');
+      window.location.href='index.html';
+      return;
+    }
     console.log(filteredProducts.length);
     products = filteredProducts.map((productDetails) => {
       if (productDetails.type === "clothing") {

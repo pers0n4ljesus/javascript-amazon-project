@@ -73,6 +73,7 @@ function renderProductsGrid() {
 
   updateCartQuantity('.js-cart-quantity');
 
+
 }
 
 
@@ -100,11 +101,17 @@ document.addEventListener('click', (event) => {
   }
 
   if (target.classList.contains('js-search-button')) {
-    const searchKey = document.querySelector('.js-search-bar').value
-    console.log(searchKey);
-    window.location.href = `index.html?search=${searchKey}`;
+    searchFor();
   }
 })
+
+export function searchFor() {
+  const searchKey = (document.querySelector('.js-search-bar').value).toLowerCase();
+    console.log(searchKey);
+    window.location.href = `index.html?search=${searchKey}`;
+}
+
+window.searchFor = searchFor;
 
 function updateCart(productId) {
   const messageElement = document.querySelector(`.js-added-to-cart${productId}`);

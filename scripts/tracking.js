@@ -2,12 +2,15 @@ import { loadProductsFetch, products } from '../data/products.js';
 import { formatDate } from '../data/deliveryOptions.js';
 import { orders } from '../scripts/orders.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import { updateCartQuantity } from '../data/cart.js';
+import { searchFor } from './amazon.js';
 
 const url = new URL(window.location.href);
 const orderId = url.searchParams.get('orderId');
 const productId = url.searchParams.get('productId');
 
 renderTrackingPage();
+updateCartQuantity('.js-cart-quantity');
 
 async function renderTrackingPage() {
 
@@ -84,7 +87,14 @@ async function renderTrackingPage() {
 
   if (deliveryProgress <= 49 ) {
     document.querySelector('.js-preparing').classList.add('current-status');
-  } else if (deliveryProgress >= 99) {
-    document.querySelector('js-shipped').classList.add('current-status');
+  } else if (deliveryProgress < 100 ) {
+    document.querySelector('.js-shipped').classList.add('current-status');
   } else document.querySelector('.js-delivered').classList.add('current-status');
 }
+
+document.addEventListener('click', (event) => {
+  const target = event.target;
+  if (target.classList.contains('.js-search-button')) {
+    searchFor();
+  }
+})

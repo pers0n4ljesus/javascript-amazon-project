@@ -2,6 +2,7 @@ import { formatDate } from "../data/deliveryOptions.js";
 import { addToCart, cart, updateCartQuantity } from "../data/cart.js";
 import { getMatchingProduct, loadProductsFetch, products } from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
+import { searchFor } from "./amazon.js";
 
 export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
@@ -108,6 +109,10 @@ document.addEventListener('click', (event) => {
     addToCart(productId);
     window.location.href = 'checkout.html'; 
 
+  }
+
+  if (target.classList.contains('.js-search-button')) {
+    searchFor();
   }
 });
 
