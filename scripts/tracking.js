@@ -1,12 +1,11 @@
 import { loadProductsFetch, products } from '../data/products.js';
 import { formatDate } from '../data/deliveryOptions.js';
 import { orders } from '../scripts/orders.js';
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 const url = new URL(window.location.href);
 const orderId = url.searchParams.get('orderId');
-console.log(orderId);
 const productId = url.searchParams.get('productId');
-console.log(productId);
 
 renderTrackingPage();
 
@@ -26,8 +25,8 @@ async function renderTrackingPage() {
   // Extract estimated delivery time
   const estimatedDeliveryTime = orderProduct?.estimatedDeliveryTime;
 
-  const elapsedTime = dayjs().diff(dayjs(orderProduct.orderTime), 'millisecond');
-  const totalDeliveryTime = dayjs(estimatedDeliveryTime).diff(dayjs(orderProduct.orderTime), 'millisecond');
+  const elapsedTime = dayjs().diff(dayjs(order.orderTime), 'millisecond');
+  const totalDeliveryTime = dayjs(estimatedDeliveryTime).diff(dayjs(order.orderTime), 'millisecond');
   const deliveryProgress = (elapsedTime / totalDeliveryTime) * 100;
 
 
@@ -64,22 +63,28 @@ async function renderTrackingPage() {
         <img class="product-image" src="${matchingProduct.image}">
 
         <div class="progress-labels-container">
-          <div class="progress-label">
+          <div class="progress-label js-preparing">
             Preparing
           </div>
-          <div class="progress-label current-status">
+          <div class="progress-label js-shipped">
             Shipped
           </div>
-          <div class="progress-label">
+          <div class="progress-label js-delivered">
             Delivered
           </div>
         </div>
 
         <div class="progress-bar-container">
-          <div class="progress-bar"></div>
+          <div class="progress-bar" style="width: ${deliveryProgress}%"></div>
         </div>
       </div>
   `;
 
   document.querySelector('.js-order-tracking').innerHTML = html;
+
+  if (deliveryProgress <= 49 ) {
+    document.querySelector('.js-preparing').classList.add('current-status');
+  } else if (deliveryProgress >= 99) {
+    document.querySelector('js-shipped').classList.add('current-status');
+  } else document.querySelector('.js-delivered').classList.add('current-status');
 }
